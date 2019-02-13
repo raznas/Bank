@@ -1,0 +1,79 @@
+import java.util.Arrays;
+
+public class Bank {
+	private Client[] clients = new Client[101];
+	private Logger logService;
+	// private accountUpdater;
+
+	public Bank() {
+
+	}
+
+	public Bank(Client[] clients, Logger logService) {
+		setClients(clients);
+		setLogService(logService);
+	}
+
+	public float getBalance() {
+		float sum = 0;
+		for (int i = 0;i<clients.length;i++) {
+			if (clients[i]!=null) {
+				sum += clients[i].getFortune();
+				
+			}
+		}
+		return sum;
+		
+	}
+	
+	public void addClient(Client client) {
+		for (int i=0;i<clients.length;i++) {
+			if (clients[i]==null) {
+				clients[i]=client;
+				return;
+		
+			}
+		
+		}
+		System.out.println("Bank reached clients limit");
+	}
+	
+	public void removeClient (int id) {
+		for (int i=0;i<clients.length;i++) {
+			if ((clients[i]!=null) && (clients[i].getId()==id)) {
+				clients[i]=null;
+			}
+		}
+		System.out.println("Client Id not found");
+	}
+	
+	public void viewLogs() {
+		
+	}
+	
+	public void startAccountUpdater() {
+		
+	}
+	
+	public Client[] getClients() {
+		return clients;
+	}
+
+	public void setClients(Client[] clients) {
+		this.clients = clients;
+	}
+
+	public Logger getLogService() {
+		return logService;
+	}
+
+	public void setLogService(Logger logService) {
+		this.logService = logService;
+	}
+
+	@Override
+	public String toString() {
+		return "Bank [clients=" + Arrays.toString(clients) + ", logService=" + logService + "]";
+	}
+
+}
