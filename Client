@@ -1,0 +1,135 @@
+import java.util.Arrays;
+
+import javax.management.relation.RelationServiceNotRegisteredException;
+
+public class Client {
+	private int id;
+	private String name;
+	private float balance;
+	private Account[] accounts = new Account[5];
+	private float commissionRate = 0;
+	private float interestRate = 0;
+	private Logger logger;
+
+	public Client(int id, String name, float balance) {
+		setId(id);
+		setName(name);
+		setBalance(balance);
+	}
+
+	public void addAccount(Account account) {
+		for (int i = 0; i < accounts.length; i++) {
+			//fix the null
+			if ((accounts[i] != null) && (accounts[i]).getId() != account.getId()) {
+				accounts[i] = account;
+			}
+			
+			{
+				return;
+				
+			}
+		}
+		Log log = new Log(System.currentTimeMillis(), account.getId(), "Account added", account.getBalance());
+		Logger logger = new Logger("c:");
+		logger.log(log);
+	}
+
+	public Account getAcoount(int id) {
+		for (int i = 0; i < accounts.length; i++) {
+			if ((accounts[i] != null) && (accounts[i]).getId() != id) {
+
+				return accounts[i];
+
+			}
+
+		}
+		System.out.println("Account does not exist");
+		return null;
+
+	}
+
+	public void removeAccount(int id) {
+		for (int i = 0; i < accounts.length; i++) {
+			if ((accounts[i] != null) && (accounts[i].getId() == id)) {
+				accounts[i] = null;
+				balance = balance + accounts[i].getBalance();
+				Log log = new Log(System.currentTimeMillis(), getId(), "Account removed ", balance);
+				Logger logger = new Logger("c:");
+				logger.log(log);
+
+			}
+			System.out.println("Account does not exist");
+		}
+
+	}
+
+	public void deposit(float amount) {
+		setBalance(getBalance() + (amount * commissionRate));
+
+	}
+
+	public void withdrw(float amount) {
+		setBalance(getBalance() - (amount * commissionRate));
+	}
+
+	public void autoUpdateAccounts() {
+		for (int i = 0;i<accounts.length;i++) {
+			if (accounts[i] != null) {
+				accounts[i].setBalance(accounts[i].getBalance()+(accounts[i].getBalance()*interestRate));
+				Log log = new Log(System.currentTimeMillis(), accounts[i].getId(), "interest was added to account", accounts[i].getBalance());
+				Logger logger = new Logger("c:");
+				logger.log(log);
+			}
+		}
+	}
+	
+	public float getFortune() {
+		float sum = getBalance();
+		for (int i=0;i<accounts.length;i++) {
+			if (accounts[i] != null) {
+				sum += accounts[i].getBalance();
+			}
+		}
+		return sum;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
+	}
+
+	public Account[] getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Account[] accounts) {
+		this.accounts = accounts;
+	}
+
+	@Override
+	public String toString() {
+		return "Client [id=" + id + ", name=" + name + ", balance=" + balance + ", accounts="
+				+ Arrays.toString(accounts) + ", commissionRate=" + commissionRate + ", interestRate=" + interestRate
+				+ ", logger=" + logger + "]";
+	}
+	
+}
